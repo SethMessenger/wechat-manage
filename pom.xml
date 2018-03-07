@@ -188,6 +188,14 @@
         </dependency>
         <!-- SPRING end -->
 
+        <!-- velocity  -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.23</version>
+        </dependency>
+        <!-- velocity end -->
+
         <!-- AOP begin -->
         <dependency>
             <groupId>org.aspectj</groupId>

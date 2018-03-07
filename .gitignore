@@ -2,3 +2,5 @@
 .idea/*
 *.idea
 target/*
+wxmp.iml
+*.iml

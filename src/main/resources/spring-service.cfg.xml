@@ -19,9 +19,7 @@
 
 
 	
-        <!-- 微信OAuth2的拦截器,开发者可以自行配置参数
-        	此处拦截只为展示OAuth2接口获取openid
-        -->
+        <!-- 微信OAuth2的拦截器,开发者可以自行配置参数，此处拦截只为展示OAuth2接口获取openid -->
         <mvc:interceptors>
 			<mvc:interceptor>
 	        	<mvc:mapping path="/**/*.html"/>

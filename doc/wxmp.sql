@@ -18,12 +18,12 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`wxmp` /*!40100 DEFAULT CHARACTER SET ut
 USE `wxmp`;
 
 # /* create user seth to manage this database */
-# create user 'seth'@'localhost' identified by '65626196';
-# create user 'seth'@'%' identified by '65626196';
-# grant all privileges on `exmp`.* to 'seth'@'%' identified by '65626196';
-# grant all privileges on `exmp`.* to 'seth'@'localhost' identified by '65626196';
-# grant all privileges on *.* to 'seth'@'%' identified by '65626196';
-# grant all privileges on *.* to 'seth'@'localhost' identified by '65626196';
+# create user 'seth'@'localhost' identified by '123456';
+# create user 'seth'@'%' identified by '123456';
+# grant all privileges on `exmp`.* to 'seth'@'%' identified by '123456';
+# grant all privileges on `exmp`.* to 'seth'@'localhost' identified by '123456';
+# grant all privileges on *.* to 'seth'@'%' identified by '123456';
+# grant all privileges on *.* to 'seth'@'localhost' identified by '123456';
 # flush privileges;
 
 /*Table structure for table `t_wxcms_account` */

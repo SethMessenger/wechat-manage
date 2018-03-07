@@ -59,7 +59,13 @@ public class LoginCtrl {
 		data.setCode(0);
 		return data;
 	}
-	
+
+	/**
+	 * 登录验证
+	 * @param request
+	 * @param paramUser
+	 * @return
+	 */
 	@ResponseBody
     @RequestMapping(value = "/checkLogin", method = RequestMethod.POST)
 	public Map<String, Object> checkLogin(HttpServletRequest request,SysUser paramUser){

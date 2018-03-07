@@ -8,11 +8,9 @@ function checkLogin(){
 	var pwdInput = $("#pwdInput").val().trim();
 	
 	if(accountInput.length == 0){
-		$.alert("请输入登录名", "提示！");
-		return false;
+		alert("请输入登录名");
 	}else if(pwdInput.length == 0){
-		$.alert("请输入密码", "提示！");
-		return false;
+		alert("请输入密码");
 	}else{
 		var user = new Object();
 		user.account = accountInput;
@@ -29,7 +27,7 @@ function doLogin(userObj){
 	//同步访问
 	var result = "";
 	$.ajax({
-		url:path + '/login/checkLogin',
+		url:'/login/checkLogin',
 	    type:'POST',
 	    async: false,
 	    dataType:'json',
@@ -44,11 +42,11 @@ function doLogin(userObj){
 
 	
 	if(result.code == "-1"){
-	  	$.alert("登录名或密码错误", "警告！");
+	  	alert("登录名或密码错误");
 	}else{ 
 		//跳转到主页	
 		var userId = result.userId;
-		window.location.href = path + "/wxcms/main?userId="+userId;
+		window.location.href = "/wxcms/main?userId="+userId;
 	}
 }
 

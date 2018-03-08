@@ -72,7 +72,7 @@ public class WxCmsCtrl {
 			@RequestParam(required=false) String userId,
 			HttpSession session){
 		
-		ModelAndView mv = new ModelAndView("wxcms/urltoken");
+		ModelAndView mv = new ModelAndView("wxcms/content");
 		List<Account> accounts = accountDao.listForPage(null);
 		if(!CollectionUtils.isEmpty(accounts)){
 			mv.addObject("account",accounts.get(0));

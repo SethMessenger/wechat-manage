@@ -40,7 +40,7 @@
             <property name="allowUrls">
                 <list>
                     <value>/</value>
-                    <value>/test/velocity</value>
+                    <value>/test/freemarker</value>
                     <value>/wxcms/main</value>
                     <value>/login/logout</value>
                     <value>/login/checkLogin</value>
@@ -50,14 +50,11 @@
             </property>
         </bean>
     </mvc:interceptors>
-    <!-- 视图解析器（ViewResolver）配置 <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>-->
-    <!--<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-    <!--<property name="prefix" value="/WEB-INF/template/views/"/>-->
-    <!--<property name="suffix" value=".jsp"/>-->
-    <!--</bean>-->
 
+    <!-- freemarker的配置 -->
     <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-        <property name="templateLoaderPath" value=""/>
+        <property name="templateLoaderPath" value="/WEB-INF/template/freemarker/"/>
+        <property name="defaultEncoding" value="UTF-8" />
         <property name="freemarkerSettings">
             <props>
                 <prop key="tag_syntax">auto_detect</prop>
@@ -71,18 +68,69 @@
                 <prop key="time_format">HH:mm:ss</prop>
                 <prop key="number_format">0.######</prop>
                 <prop key="whitespace_stripping">true</prop>
-                <prop key="auto_import">/WEB-INF/ftl/spring.ftl as s</prop>
+                <!--<prop key="auto_import">/WEB-INF/template/freemarker/test.ftl as t</prop>-->
             </props>
         </property>
     </bean>
 
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-        <property name="prefix" value="/WEB-INF/pages/"/>
-        <property name="suffix" value=".html"/>
-        <property name="cache" value="true"/>
-        <property name="contentType" value="text/html; charset=UTF-8"/>
-        <property name="requestContextAttribute" value="request"/>
+    <!-- 视图解析器（ViewResolver）配置 <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>-->
+    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/template/views/"/>
+        <property name="suffix" value=".jsp"/>
     </bean>
+
+    <bean id="freeMarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="suffix" value=".ftl"/>
+        <!--<property name="cache" value="false"/>-->
+        <property name="contentType" value="text/html;charset=UTF-8" />
+        <!-- 此变量值为pageContext.request, 页面使用方法：request.contextPath -->
+        <property name="requestContextAttribute" value="request"/>
+        <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+        <property name="allowSessionOverride" value="true" />
+        <property name="allowRequestOverride" value="true" />
+        <property name="exposeSpringMacroHelpers" value="false" />
+        <property name="exposeRequestAttributes" value="true" />
+        <property name="exposeSessionAttributes" value="true" />
+    </bean>
+
+    <!-- 视图配置 在list中按照配置的先后顺序(注意spring3 和 spring4 依赖的类名称不同) -->
+    <!--<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">-->
+        <!--<property name="favorPathExtension" value="true" />-->
+        <!--<property name="favorParameter" value="true" />-->
+        <!--<property name="ignoreAcceptHeader" value="true"/>-->
+        <!--<property name="defaultContentType" value="text/html" />-->
+        <!--<property name="mediaTypes">-->
+            <!--<map>-->
+                <!--&lt;!&ndash; 告诉视图解析器，返回的类型为json格式 &ndash;&gt;-->
+                <!--<entry key="json" value="application/json" />-->
+                <!--<entry key="xml" value="application/xml" />-->
+                <!--<entry key="htm" value="text/htm" />-->
+                <!--<entry key="file" value="application/octet-stream" />-->
+                <!--<entry key="image" value="image/*" />-->
+            <!--</map>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <bean id="contentNegotiatingViewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="order" value="0"/>
+        <!--<property name="contentNegotiationManager" ref="contentNegotiationManager"/>-->
+        <property name="viewResolvers">
+            <list>
+                <!-- 这个类用于freemarker的视图解析 -->
+                <ref bean="freeMarkerViewResolver"/>
+                <!-- 这个类用于jsp视图解析 -->
+                <ref bean="jspViewResolver" />
+                <!--  -->
+            </list>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <!-- json -->
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+            </list>
+        </property>
+    </bean>
+
 
     <!-- 配置文件上传，如果没有使用文件上传可以不用配置，当然如果不配，那么配置文件中也不必引入上传组件包 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

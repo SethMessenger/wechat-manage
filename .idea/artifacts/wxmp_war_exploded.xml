@@ -18,6 +18,7 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.3.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-websocket:4.3.5.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-messaging:4.3.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.freemarker:freemarker:2.3.23" />
           <element id="library" level="project" name="Maven: org.aspectj:aspectjrt:1.7.4" />
           <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.7.4" />
           <element id="library" level="project" name="Maven: cglib:cglib:3.1" />

@@ -4,8 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.zeasn.log.ApiVisitLogger;
-
 /**
  * 全局维护信息 访问日志 请求处理时间日志
  */

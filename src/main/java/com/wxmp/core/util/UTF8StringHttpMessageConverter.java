@@ -37,15 +37,18 @@ public class UTF8StringHttpMessageConverter extends AbstractHttpMessageConverter
 		this.writeAcceptCharset = writeAcceptCharset;
 	}
 
+	@Override
 	public boolean supports(Class<?> clazz) {
 		return String.class.equals(clazz);
 	}
 
-	protected String readInternal(Class<? extends String> clazz,HttpInputMessage inputMessage) throws IOException {
+	@Override
+	protected String readInternal(Class<? extends String> clazz, HttpInputMessage inputMessage) throws IOException {
 		Charset charset = getContentTypeCharset(inputMessage.getHeaders().getContentType());
 		return StreamUtils.copyToString(inputMessage.getBody(), charset);
 	}
 
+	@Override
 	protected Long getContentLength(String s, MediaType contentType) {
 		Charset charset = getContentTypeCharset(contentType);
 		try {
@@ -55,6 +58,7 @@ public class UTF8StringHttpMessageConverter extends AbstractHttpMessageConverter
 		}
 	}
 
+	@Override
 	protected void writeInternal(String s, HttpOutputMessage outputMessage)throws IOException {
 		if (this.writeAcceptCharset) {
 			outputMessage.getHeaders().setAcceptCharset(getAcceptedCharsets());

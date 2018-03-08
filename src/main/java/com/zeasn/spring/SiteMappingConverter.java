@@ -8,8 +8,6 @@ import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zeasn.spring.util.SiteMappingUtil;
-import com.zeasn.utils.HttpContext;
 
 /**
  * 站点匹配转换器
@@ -38,8 +36,8 @@ public class SiteMappingConverter extends MappingJackson2HttpMessageConverter {
 	@Override
 	protected void writeInternal(Object object, Type type, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
 		// 过滤匹配
-		String snum = HttpContext.getRequest().getParameter("snum");
-		SiteMappingUtil.filterApiResultObject(object, snum);
-		super.writeInternal(object, type, outputMessage);
+//		String snum = HttpContext.getRequest().getParameter("snum");
+//		SiteMappingUtil.filterApiResultObject(object, snum);
+//		super.writeInternal(object, type, outputMessage);
 	}
 }

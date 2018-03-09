@@ -13,6 +13,7 @@ import java.util.SortedMap;
 public class SignUtil {
 	
 	/**
+	 * 校验微信签名是否成功
 	 * @param signature 微信加密签名
 	 * @param timestamp tocken
 	 * @param timestamp 时间戳

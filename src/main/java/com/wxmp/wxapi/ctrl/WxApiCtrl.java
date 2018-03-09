@@ -77,13 +77,19 @@ public class WxApiCtrl {
 	@RequestMapping(value = "/{account}/message",  method = RequestMethod.GET)
 	public @ResponseBody String doGet(HttpServletRequest request,@PathVariable String account) {
 		//如果是多账号，根据url中的account参数获取对应的MpAccount处理即可
-		MpAccount mpAccount = WxMemoryCacheClient.getSingleMpAccount();//获取缓存中的唯一账号
+		//获取缓存中的唯一账号
+		MpAccount mpAccount = WxMemoryCacheClient.getSingleMpAccount();
 		if(mpAccount != null){
-			String token = mpAccount.getToken();//获取token，进行验证；
-			String signature = request.getParameter("signature");// 微信加密签名
-			String timestamp = request.getParameter("timestamp");// 时间戳
-			String nonce = request.getParameter("nonce");// 随机数
-			String echostr = request.getParameter("echostr");// 随机字符串
+			//获取token，进行验证；
+			String token = mpAccount.getToken();
+			// 微信加密签名
+			String signature = request.getParameter("signature");
+			// 时间戳
+			String timestamp = request.getParameter("timestamp");
+			// 随机数
+			String nonce = request.getParameter("nonce");
+			// 随机字符串
+			String echostr = request.getParameter("echostr");
 			
 			// 校验成功返回  echostr，成功成为开发者；否则返回error，接入失败
 			if (SignUtil.validSign(signature, token, timestamp, nonce)) {
@@ -95,13 +101,17 @@ public class WxApiCtrl {
 	
 	/**
 	 * POST 请求：进行消息处理；
+	 * @param request
+	 * @param account
+	 * @param response
 	 * */
 	@RequestMapping(value = "/{account}/message", method = RequestMethod.POST)
 	public @ResponseBody String doPost(HttpServletRequest request,@PathVariable String account,HttpServletResponse response) {
 		//处理用户和微信公众账号交互消息
 		MpAccount mpAccount = WxMemoryCacheClient.getSingleMpAccount();
 		try {
-			MsgRequest msgRequest = MsgXmlUtil.parseXml(request);//获取发送的消息
+			//获取发送的消息
+			MsgRequest msgRequest = MsgXmlUtil.parseXml(request);
 			return myService.processMsg(msgRequest,mpAccount);
 		} catch (Exception e) {
 			e.printStackTrace();

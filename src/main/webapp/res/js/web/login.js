@@ -46,7 +46,7 @@ function doLogin(userObj){
 	}else{ 
 		//跳转到主页	
 		var userId = result.userId;
-		window.location.href = "/wxcms/urltoken?userId="+userId;
+		window.location.href = "/content/load/wxcms$content/";
 	}
 }
 

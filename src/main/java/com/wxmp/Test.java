@@ -9,9 +9,10 @@ public class Test {
 
     public static void main(String[] args){
 
+        String s = "a$s$c";
+        String result = s.replaceAll("[$]", "d");
 
-
-
+        System.out.print(result);
     }
 
 }

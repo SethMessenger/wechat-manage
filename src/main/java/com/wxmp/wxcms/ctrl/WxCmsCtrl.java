@@ -66,7 +66,68 @@ public class WxCmsCtrl {
 	
 	@Autowired
 	private MsgNewsService msgNewsService;
-	
+
+	/**
+	 * 用户引导页
+	 * @param request
+	 * @param userId
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/index_p")
+	public ModelAndView indexPage(HttpServletRequest request ,@RequestParam(required=false) String userId, HttpSession session){
+		ModelAndView mv = new ModelAndView("wxcms/first_page");
+		SysUser sysUser = sysUserService.getSysUserById(userId);
+		mv.addObject("account", sysUser.getAccount());
+		mv.addObject("userId", sysUser.getId());
+		return mv;
+	}
+
+	/**
+	 * 老的页面入口 TODO 待删除
+	 * @param request
+	 * @param save
+	 * @param userId
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/urltokenOld")
+	public ModelAndView urltokenOld(HttpServletRequest request ,String save,
+								 @RequestParam(required=false) String userId,
+								 HttpSession session){
+
+		ModelAndView mv = new ModelAndView("wxcms/urltokenOld");
+		List<Account> accounts = accountDao.listForPage(null);
+		if(!CollectionUtils.isEmpty(accounts)){
+			mv.addObject("account",accounts.get(0));
+		}else{
+			mv.addObject("account",new Account());
+		}
+		List<String> msgCountList = new ArrayList<String>();
+		for(int i=1;i<8;i++){
+			msgCountList.add(String.valueOf(i));
+		}
+		mv.addObject("cur_nav", "urltoken");
+		if(save != null){
+			mv.addObject("successflag",true);
+		}else{
+			mv.addObject("successflag",false);
+		}
+		mv.addObject("msgCountList", msgCountList);
+
+		SysUser sysUser =  SessionUtilsWeb.getUser(request);
+		session.setAttribute("sysUser", sysUser);
+		return mv;
+	}
+
+	/**
+	 * 跳转主页面入口
+	 * @param request
+	 * @param save
+	 * @param userId
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "/urltoken")
 	public ModelAndView urltoken(HttpServletRequest request ,String save,
 			@RequestParam(required=false) String userId,
@@ -95,7 +156,13 @@ public class WxCmsCtrl {
 		session.setAttribute("sysUser", sysUser);
 		return mv;
 	}
-	
+
+	/**
+	 * 生成
+	 * @param request
+	 * @param account
+	 * @return
+	 */
 	@RequestMapping(value = "/getUrl")
 	public ModelAndView getUrl(HttpServletRequest request ,@ModelAttribute Account account){
 		String path = SpringFreemarkerContextPathUtil.getBasePath(request);
@@ -193,20 +260,6 @@ public class WxCmsCtrl {
 	public ModelAndView weui(HttpServletRequest request){
 		ModelAndView mv = new ModelAndView("wxcms/weui");
 		mv.addObject("cur_nav", "weui");
-		return mv;
-	}
-	
-	/**
-	 * 登录之后跳转到主页
-	 * @param userId
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping(value = "/main")
-	public ModelAndView main(@RequestParam(required=false) String userId,HttpSession session){
-		ModelAndView mv = new ModelAndView("wxcms/main");
-		SysUser sysUser = sysUserService.getSysUserById(userId);
-		session.setAttribute("sysUser", sysUser);
 		return mv;
 	}
 	

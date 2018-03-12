@@ -45,7 +45,7 @@ public class AccountMenuGroupCtrl{
 
 	@RequestMapping(value = "/paginationEntity")
 	public  ModelAndView paginationEntity(AccountMenuGroup searchEntity , Pagination<AccountMenuGroup> pagination){
-		ModelAndView mv = new ModelAndView("wxcms/accountMenuGroupPagination");
+		ModelAndView mv = new ModelAndView("wxcms/menu");
 		pagination = entityService.paginationEntity(searchEntity,pagination);
 		mv.addObject("pagination",pagination);
 		mv.addObject("searchEntity",searchEntity);

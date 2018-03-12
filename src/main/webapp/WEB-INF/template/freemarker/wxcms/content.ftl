@@ -73,10 +73,10 @@
                         </a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a class="J_menuItem" href="/content/load/wxcms$urltoken/" data-index="0">秘钥管理</a>
+                                <a class="J_menuItem" href="/wxcms/urltoken/" data-index="0">秘钥管理</a>
                             </li>
                             <li>
-                                <a class="J_menuItem" href="#">菜单管理</a>
+                                <a class="J_menuItem" href="/wxcms/accountMenuGroup/paginationEntity/">菜单管理</a>
                             </li>
                             <li>
                                 <a class="J_menuItem" href="#">文本管理</a>

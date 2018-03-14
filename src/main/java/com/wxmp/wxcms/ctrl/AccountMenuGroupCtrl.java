@@ -15,7 +15,9 @@ import com.wxmp.wxcms.service.AccountMenuGroupService;
 import com.wxmp.wxcms.service.AccountMenuService;
 
 /**
- * 
+ * 菜单管理controller
+ * @author Seth.Messenger
+ * @date 2018-03-14
  */
 
 @Controller
@@ -40,6 +42,16 @@ public class AccountMenuGroupCtrl{
 		ModelAndView mv = new ModelAndView("wxcms/accountMenuGroupList");
 		List<AccountMenuGroup> list = entityService.list(searchEntity);
 		mv.addObject("list",list);
+		return mv;
+	}
+
+	@RequestMapping(value = "/paginationEntityJsp")
+	public  ModelAndView paginationEntityJsp(AccountMenuGroup searchEntity , Pagination<AccountMenuGroup> pagination){
+		ModelAndView mv = new ModelAndView("wxcms/accountMenuGroupPagination");
+		pagination = entityService.paginationEntity(searchEntity,pagination);
+		mv.addObject("pagination",pagination);
+		mv.addObject("searchEntity",searchEntity);
+		mv.addObject("cur_nav", "menu");
 		return mv;
 	}
 
@@ -103,8 +115,12 @@ public class AccountMenuGroupCtrl{
 		}
 		return code;
 	}
-	
-	
+
+	/**
+	 * 删除菜单组
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value = "/deleteMenu")
 	@ResponseBody
 	public String deleteMenu(String id){

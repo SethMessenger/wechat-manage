@@ -32,7 +32,7 @@
      </dd>
 
 	<dd>
-		<a href="<%=path%>/wxcms/accountMenuGroup/paginationEntity" class="firstLi">
+		<a href="<%=path%>/wxcms/accountMenuGroup/paginationEntityJsp" class="firstLi">
 			<span class="navIcon"><img src="<%=path%>/res/images/navMess_icon_17.png"></span>
 			<h6 class="fTitle">菜单管理</h6>
 			<span class="downIcon"><img src="<%=path%>/res/images/down_icon_06.png"></span>
@@ -40,7 +40,7 @@
 	</dd>
 
 	<dd>
-		<a href="<%=path%>/accountfans/paginationEntity" class="firstLi">
+		<a href="<%=path%>/accountfans/paginationEntityJsp" class="firstLi">
 			<span class="navIcon"><img src="<%=path%>/res/images/fansMess_icon_20.png"></span>
 			<h6 class="fTitle">粉丝管理</h6>
 			<span class="downIcon"><img src="<%=path%>/res/images/down_icon_06.png"></span>

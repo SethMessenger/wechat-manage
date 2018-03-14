@@ -68,7 +68,7 @@
 				   window.location.href = path+"/wxcms/accountMenuGroup/paginationEntity";
 				}else if(result == "2"){
 			       alert("更新成功");
-			       window.location.href = path+"/wxcms/accountMenuGroup/paginationEntity";
+			       window.location.href = path+"/wxcms/accountMenuGroup/paginationEntityJsp";
 			    }else{
 			       alert("保存失败");
 			    }
@@ -89,7 +89,7 @@
 		
 		//返回到原来页面
 		function doBack(){
-			window.location.href='<%=path%>/wxcms/accountMenuGroup/paginationEntity';
+			window.location.href='<%=path%>/wxcms/accountMenuGroup/paginationEntityJsp';
 		}
 </script>
 </head>
@@ -110,7 +110,7 @@
             	<li><span class="posIcon"><img src="<%=path%>/res/images/pos_icon_03.png">当前位置：</span></li>
                 <li>
                     <h6>
-                     <a href="<%=path%>/wxcms/accountMenuGroup/paginationEntity">菜单管理</a>
+                     <a href="<%=path%>/wxcms/accountMenuGroup/paginationEntityJsp">菜单管理</a>
                    </h6>
                    <h6>></h6>
                    <h6>菜单组列表</h6>

@@ -276,7 +276,7 @@ function doSendNews(newsObj){
 
 //翻页函数
 function doPageOver(pageNum,pageSize){
-	window.location.href = path + "/accountfans/paginationEntity?page="+pageNum+"&pageSize="+pageSize;
+	window.location.href = path + "/accountfans/paginationEntityJsp?page="+pageNum+"&pageSize="+pageSize;
 }
 
 

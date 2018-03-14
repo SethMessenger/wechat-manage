@@ -51,7 +51,7 @@
 			}
 		}
 		function doBack(){
-			window.location.href='<%=path%>/wxcms/accountMenuGroup/paginationEntity';
+			window.location.href='<%=path%>/wxcms/accountMenuGroup/paginationEntityJsp';
 		}
 </script>
 </head>

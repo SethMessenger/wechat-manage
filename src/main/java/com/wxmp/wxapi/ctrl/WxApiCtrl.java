@@ -118,15 +118,21 @@ public class WxApiCtrl {
 			return "error";
 		}
 	}
-	
-	//创建微信公众账号菜单
+
+	/**
+	 * 创建微信公众账号菜单
+	 * @param request
+	 * @param gid
+	 * @return
+	 */
 	@RequestMapping(value = "/publishMenu")
 	public ModelAndView publishMenu(HttpServletRequest request,String gid) {
 		JSONObject rstObj = null;
 		MpAccount mpAccount = WxMemoryCacheClient.getSingleMpAccount();
 		if(mpAccount != null){
 			rstObj = myService.publishMenu(gid,mpAccount);
-			if(rstObj != null){//成功，更新菜单组
+			if(rstObj != null){
+				//成功，更新菜单组
 				if(rstObj.containsKey("menu_id")){
 					ModelAndView mv = new ModelAndView("common/success");
 					mv.addObject("successMsg", "创建菜单成功");
@@ -152,7 +158,8 @@ public class WxApiCtrl {
 	@RequestMapping(value = "/deleteMenu")
 	public ModelAndView deleteMenu(HttpServletRequest request) {
 		JSONObject rstObj = null;
-		MpAccount mpAccount = WxMemoryCacheClient.getSingleMpAccount();//获取缓存中的唯一账号
+		//获取缓存中的唯一账号
+		MpAccount mpAccount = WxMemoryCacheClient.getSingleMpAccount();
 		if(mpAccount != null){
 			rstObj = myService.deleteMenu(mpAccount);
 			if(rstObj != null && rstObj.getInt("errcode") == 0){
@@ -173,7 +180,8 @@ public class WxApiCtrl {
 	//获取用户列表
 	@RequestMapping(value = "/syncAccountFansList")
 	public ModelAndView syncAccountFansList(){
-		MpAccount mpAccount = WxMemoryCacheClient.getSingleMpAccount();//获取缓存中的唯一账号
+		//获取缓存中的唯一账号
+		MpAccount mpAccount = WxMemoryCacheClient.getSingleMpAccount();
 		if(mpAccount != null){
 			boolean flag = myService.syncAccountFansList(mpAccount);
 			if(flag){
@@ -189,9 +197,11 @@ public class WxApiCtrl {
 	@RequestMapping(value = "/syncAccountFans")
 	public ModelAndView syncAccountFans(String openId){
 		ModelAndView mv = new ModelAndView("common/failure");
-		MpAccount mpAccount = WxMemoryCacheClient.getSingleMpAccount();//获取缓存中的唯一账号
+		//获取缓存中的唯一账号
+		MpAccount mpAccount = WxMemoryCacheClient.getSingleMpAccount();
 		if(mpAccount != null){
-			AccountFans fans = myService.syncAccountFans(openId,mpAccount,true);//同时更新数据库
+			//同时更新数据库
+			AccountFans fans = myService.syncAccountFans(openId,mpAccount,true);
 			if(fans != null){
 				mv.setViewName("wxcms/fansInfo");
 				mv.addObject("fans", fans);
@@ -206,7 +216,8 @@ public class WxApiCtrl {
 	//获取永久素材
 	@RequestMapping(value = "/syncMaterials")
 	public  ModelAndView syncMaterials(Pagination<MaterialArticle> pagination){
-		MpAccount mpAccount = WxMemoryCacheClient.getSingleMpAccount();//获取缓存中的唯一账号
+		//获取缓存中的唯一账号
+		MpAccount mpAccount = WxMemoryCacheClient.getSingleMpAccount();
 		
 		ModelAndView mv = new ModelAndView("wxcms/materialPagination");
 		Integer offset = pagination.getStart();

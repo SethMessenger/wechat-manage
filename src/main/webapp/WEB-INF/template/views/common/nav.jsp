@@ -22,12 +22,12 @@
 			   </a>
 			</li>
 			<li>
-			   <a href="<%=path%>/wxcms/accountMenuGroup/paginationEntity">
+			   <a href="<%=path%>/wxcms/accountMenuGroup/paginationEntityJsp">
 				<span>菜单管理</span>
 			   </a>
 			</li>
 			<li >
-			   <a href="<%=path%>/accountfans/paginationEntity">
+			   <a href="<%=path%>/accountfans/paginationEntityJsp">
 				<span>粉丝管理</span></a>
 			</li>
 			<li >

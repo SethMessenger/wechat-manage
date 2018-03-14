@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title>H+ 后台主题UI框架 - 主页</title>
-    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
-    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+    <title>Wechat+ 后台主题UI框架 - 主页</title>
+    <meta name="keywords" content="Wechat+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="Wechat+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
 
     <link rel="shortcut icon" href="favicon.ico">
     <link href="/res/news/css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
@@ -42,34 +42,8 @@
     <script src="/res/news/js/demo/sparkline-demo.min.js"></script>
     <script>
         $(document).ready(function () {
-//            释放后用于添加个人信箱部分 ajax实现
-//            WinMove();
-//            setTimeout(function () {
-//                $.gritter.add({
-//                    title: "您有2条未读信息", text: '请前往<a href="mailbox.html" class="text-warning">收件箱</a>查看今日任务', time: 10000
-//                })
-//            }, 2000);
-//            $(".chart").easyPieChart({barColor: "#f8ac59", scaleLength: 5, lineWidth: 4, size: 80});
-//            $(".chart2").easyPieChart({barColor: "#1c84c6", scaleLength: 5, lineWidth: 4, size: 80});
-//            var data1 = [[0, 4], [1, 8], [2, 5], [3, 10], [4, 4], [5, 16], [6, 5], [7, 11], [8, 6], [9, 11], [10, 30], [11, 10], [12, 13], [13, 4], [14, 3], [15, 3], [16, 6]];
-//            var data2 = [[0, 1], [1, 0], [2, 2], [3, 0], [4, 1], [5, 3], [6, 1], [7, 5], [8, 2], [9, 3], [10, 2], [11, 1], [12, 0], [13, 2], [14, 8], [15, 0], [16, 0]];
-//            $("#flot-dashboard-chart").length && $.plot($("#flot-dashboard-chart"), [data1, data2], {
-//                series: {
-//                    lines: {
-//                        show: false,
-//                        fill: true
-//                    },
-//                    splines: {show: true, tension: 0.4, lineWidth: 1, fill: 0.4},
-//                    points: {radius: 0, show: true},
-//                    shadowSize: 2
-//                },
-//                grid: {hoverable: true, clickable: true, tickColor: "#d5d5d5", borderWidth: 1, color: "#d5d5d5"},
-//                colors: ["#1ab394", "#464f88"],
-//                xaxis: {},
-//                yaxis: {ticks: 4},
-//                tooltip: false
-//            })
-        });
+
+        }
     </script>
     <!-- 注入腾讯分析服务 http://ta.qq.com/analysis/function -->
 <#--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>-->
@@ -82,60 +56,55 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>鼠标经过</h5>
+                    <h5>菜单管理</h5>
                     <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="table_basic.html#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="table_basic.html#">选项1</a>
-                            </li>
-                            <li><a href="table_basic.html#">选项2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
                     </div>
                 </div>
                 <div class="ibox-content">
 
-                    <table class="table table-hover">
+                    <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>
-                            <th>#</th>
-                            <th>数据</th>
-                            <th>用户</th>
-                            <th>值</th>
+                            <th>序号</th>
+                            <th>菜单名称</th>
+                            <th>是否启用</th>
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><span class="line">5,3,2,-1,-3,-2,2,3,5,2</span>
+                        <#list pagination.items as menuGroup>
+                        <tr class="gradeX">
+                            <td>${menuGroup_index + 1}</td>
+                            <td>${menuGroup.name}</td>
+                            <#if menuGroup.enable == 1>
+                                <td>是</td>
+                            <#else >
+                                <td>否</td>
+                            </#if>
+                            <td class="text-navy">
+                                <button class="btn btn-primary" onclick="doDeleteLocal('${menuGroup.id}','${menuGroup.enable}')">删除</button>
+                                <button class="btn btn-primary" onclick="">配置</button>
+                                <#if menuGroup.enable == 1>
+                                    <button class="btn btn-primary" onclick="doPublishMenu()" disabled = disabled>生成微信菜单</button>
+                                    <button class="btn btn-primary" onclick="doCancelPublishMenu()">删除微信菜单</button>
+                                <#else >
+                                    <button class="btn btn-primary" onclick="doPublishMenu()">生成微信菜单</button>
+                                    <button class="btn btn-primary" onclick="doCancelPublishMenu()" disabled = disabled>删除微信菜单</button>
+                                </#if>
                             </td>
-                            <td>张三</td>
-                            <td class="text-navy"> <i class="fa fa-level-up"></i> 40%</td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><span class="line">5,3,9,6,5,9,7,3,5,2</span>
-                            </td>
-                            <td>李四</td>
-                            <td class="text-warning"> <i class="fa fa-level-down"></i> -20%</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td><span class="line">1,6,3,9,5,9,5,3,9,6,4</span>
-                            </td>
-                            <td>王麻子</td>
-                            <td class="text-navy"> <i class="fa fa-level-up"></i> 26%</td>
-                        </tr>
+                        </#list>
                         </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>序号</th>
+                            <th>菜单名称</th>
+                            <th>是否启用</th>
+                            <th>操作</th>
+                        </tr>
+                        </tfoot>
                     </table>
+
                 </div>
             </div>
         </div>
@@ -143,5 +112,129 @@
     </div>
 </div>
 </body>
+
+<script type="text/javascript">
+    function doDeleteLocal(id,enable){
+        if(enable == '1'){
+            alert("是正在使用的微信账号菜单不能删除");
+        }else{
+            if(confirm("确定删除本地菜单?")){
+                //同步访问
+                var result = "";
+                $.ajax({
+                    url:path + '/wxcms/accountMenuGroup/deleteMenu',
+                    type:'POST',
+                    async: false,
+                    dataType:'json',
+                    data:{"id":id},
+                    success:function(msg){
+                        result = msg;
+                    },
+                    error:function(msg){
+                        alert("删除本地菜单异常");
+                    }
+                });
+
+                if(result == "1"){
+                    alert("删除本地菜单成功");
+                    window.location.href = path+"/wxcms/accountMenuGroup/paginationEntityJsp";
+                }else{
+                    alert("删除本地菜单失败");
+                    window.location.href = path+"/wxcms/accountMenuGroup/paginationEntityJsp";
+                }
+            }
+        }
+    }
+    function doDelete(id){
+        if(confirm("确定删除菜单?")){
+            window.location.href='<%=path%>/wxcms/accountMenuGroup/delete?id='+id;
+        }
+    }
+    function doPublish(){
+        var gid = $('input:radio[name=radio_name]:checked').val();
+        if(gid != null && gid != 'undefined'){
+            if(confirm("确定生成微信账号菜单?")){
+                window.location.href='<%=path%>/wxapi/publishMenu?gid='+gid;
+            }
+        }else{
+            alert("请选择菜单组");
+        }
+    }
+
+    function doCancel(){
+        if(confirm("确定删除微信账号菜单?")){
+            window.location.href='<%=path%>/wxapi/deleteMenu';
+        }
+    }
+
+    //删除微信菜单
+    function doCancelPublishMenu(){
+        if(confirm("确定删除微信账号菜单?")){
+            //同步访问
+            var result = "";
+            $.ajax({
+                url:path + '/wxapi/deletePublicMenu',
+                type:'GET',
+                async: false,
+                dataType:'text',
+                data:null,
+                success:function(msg){
+                    result = msg;
+                },
+                error:function(msg){
+                    alert(msg);
+                }
+            });
+
+            if(result == "1"){
+                alert("删除微信账号菜单成功");
+                window.location.href = path+"/wxcms/accountMenuGroup/paginationEntityJsp";
+            }else{
+                alert(result);
+            }
+
+        }
+    }
+
+
+
+    //添加菜单
+    function doPublishMenu(){
+        var gid = $('input:radio[name=radio_name]:checked').val();
+        if(gid != null && gid != 'undefined'){
+            if(confirm("确定生成微信账号菜单?")){
+                //确定生成
+                doSaveMenu(gid);
+            }
+        }else{
+            alert("请选择菜单组");
+        }
+    }
+    //跳转到后台保存
+    function doSaveMenu(gid){
+        //同步访问
+        var result = "";
+        $.ajax({
+            url:path + '/wxapi/doPublishMenu',
+            type:'POST',
+            async: false,
+            dataType:'text',
+            data:{"gid":gid},
+            success:function(msg){
+                result = msg;
+            },
+            error:function(msg){
+                alert(msg);
+            }
+        });
+
+        if(result == "1"){
+            alert("微信账号菜单成功");
+            window.location.href = path+"/wxcms/accountMenuGroup/paginationEntityJsp";
+        }else{
+            alert(result);
+        }
+    }
+</script>
 
 </html>

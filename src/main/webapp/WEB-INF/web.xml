@@ -112,20 +112,8 @@
 		<error-code>500</error-code>
 		<location>/WEB-INF/template/views/500.jsp</location>
 	</error-page>
-	
-<!-- 	<welcome-file-list>
-		<welcome-file>/WEB-INF/template/views/login.jsp</welcome-file>
-	</welcome-file-list> 
-	
-	 freemarker视图时的配置 
-		<welcome-file-list>
-		  <welcome-file>index.html</welcome-file>
-	    </welcome-file-list>
-	    
-	    	<welcome-file-list>
-	  <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
-	-->
+
+	<!-- 欢迎页面 -->
 	<welcome-file-list>
 	  <welcome-file>login.html</welcome-file>
     </welcome-file-list>

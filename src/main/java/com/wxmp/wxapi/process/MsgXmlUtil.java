@@ -63,11 +63,14 @@ public class MsgXmlUtil {
 			}else if("CreateTime".equals(name)){
 				msgReq.setCreateTime(text);
 				
-			}else if("Content".equals(name)){//文本消息
+			}else if("Content".equals(name)){
+				//文本消息
 				msgReq.setContent(text);
-			}else if("PicUrl".equals(name)){//图片消息
+			}else if("PicUrl".equals(name)){
+				//图片消息
 				msgReq.setPicUrl(text);
-			}else if("Location_X".equals(name)){//地理位置消息
+			}else if("Location_X".equals(name)){
+				//地理位置消息
 				msgReq.setLocation_X(text);
 			}else if("Location_Y".equals(name)){
 				msgReq.setLocation_Y(text);
@@ -75,7 +78,8 @@ public class MsgXmlUtil {
 				msgReq.setScale(text);
 			}else if("Label".equals(name)){
 				msgReq.setLabel(text);
-			}else if("Event".equals(name)){//事件消息
+			}else if("Event".equals(name)){
+				//事件消息
 				msgReq.setEvent(text);
 			}else if("EventKey".equals(name)){
 				msgReq.setEventKey(text);

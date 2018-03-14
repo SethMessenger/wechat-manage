@@ -42,10 +42,10 @@
 
 						    if(result == "1"){
 						       alert("删除本地菜单成功");
-							   window.location.href = path+"/wxcms/accountMenuGroup/paginationEntity";
+							   window.location.href = path+"/wxcms/accountMenuGroup/paginationEntityJsp";
 							}else{
 						       alert("删除本地菜单失败");
-						       window.location.href = path+"/wxcms/accountMenuGroup/paginationEntity";
+						       window.location.href = path+"/wxcms/accountMenuGroup/paginationEntityJsp";
 						    }
 						}
 		        	}
@@ -93,7 +93,7 @@
 
 					    if(result == "1"){
 					       alert("删除微信账号菜单成功");
-						   window.location.href = path+"/wxcms/accountMenuGroup/paginationEntity";
+						   window.location.href = path+"/wxcms/accountMenuGroup/paginationEntityJsp";
 						}else{
 					       alert(result);
 					    }
@@ -135,7 +135,7 @@
 
 				    if(result == "1"){
 				       alert("微信账号菜单成功");
-					   window.location.href = path+"/wxcms/accountMenuGroup/paginationEntity";
+					   window.location.href = path+"/wxcms/accountMenuGroup/paginationEntityJsp";
 					}else{
 				       alert(result);
 				    }

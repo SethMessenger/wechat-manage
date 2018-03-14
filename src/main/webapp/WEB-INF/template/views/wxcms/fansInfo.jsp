@@ -34,7 +34,7 @@
         	<ul>
             	<li><span class="posIcon"><img src="<%=path%>/res/images/pos_icon_03.png">当前位置：</span></li>
                 <li>
-                   <h6><a href="<%=path%>/accountfans/paginationEntity">粉丝管理</a></h6>
+                   <h6><a href="<%=path%>/accountfans/paginationEntityJsp">粉丝管理</a></h6>
                    <h6>></h6>
                    <h6>粉丝详细信息</h6>
                 </li>

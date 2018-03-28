@@ -9,10 +9,10 @@ import com.wxmp.core.domain.BaseEntity;
  * 账号菜单
  * 
  */
-
 public class AccountMenu extends BaseEntity{
 
-	private String mtype;//消息类型： click - 事件消息；view - 链接消息 
+	/** 消息类型： click - 事件消息；view - 链接消息 */
+	private String mtype;
 	
 	/**
 	 * 事件消息类型；即mtype = click; 系统定义了2中模式  key / fix 

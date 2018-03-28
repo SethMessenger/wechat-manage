@@ -80,15 +80,8 @@
 <div class="wrapper wrapper-content">
     <div class="row">
         <div class="col-sm-4">
-            a
+            Master, 欢迎来到wechat-plus，管理您的平台账户！
         </div>
-        <div class="col-sm-4">
-            b
-        </div>
-        <div class="col-sm-4">
-            c
-        </div>
-
     </div>
 </div>
 </body>

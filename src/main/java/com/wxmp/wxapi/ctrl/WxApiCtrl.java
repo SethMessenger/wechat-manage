@@ -662,7 +662,7 @@ public class WxApiCtrl {
 	
 	/**
 	 * 高级群发-图文消息|
-	 * @param newsId
+	 * @param mediaId
 	 * @param openIds
 	 * @return
 	 */
@@ -670,7 +670,8 @@ public class WxApiCtrl {
 	@ResponseBody
 	public String sendMaterialByOpenIds(String mediaId,String openIds){
 		String code = "";
-		MpAccount mpAccount = WxMemoryCacheClient.getSingleMpAccount();//获取缓存中的唯一账号
+		//获取缓存中的唯一账号
+		MpAccount mpAccount = WxMemoryCacheClient.getSingleMpAccount();
 		//分隔字符串
 		String[] openIdAarry = openIds.split(",");
 		//openids
@@ -684,12 +685,18 @@ public class WxApiCtrl {
 		if(massQesultObj.getInt("errcode") != 0){
 			code = massQesultObj.toString();
 		}else{
-			code = "1";//发送成功
+			//发送成功
+			code = "1";
 		}
 		return code;
 	}
-	
-	//创建微信公众账号菜单
+
+	/**
+	 * 创建微信公众账号菜单
+	 * @param request
+	 * @param gid
+	 * @return
+	 */
 	@RequestMapping(value = "/doPublishMenu")
 	@ResponseBody
 	public String doPublishMenu(HttpServletRequest request,String gid) {
@@ -698,7 +705,8 @@ public class WxApiCtrl {
 		MpAccount mpAccount = WxMemoryCacheClient.getSingleMpAccount();
 		if(mpAccount != null){
 			rstObj = myService.publishMenu(gid,mpAccount);
-			if(rstObj != null){//成功，更新菜单组
+			if(rstObj != null){
+				//成功，更新菜单组
 				if(rstObj.containsKey("menu_id")){
 					ModelAndView mv = new ModelAndView("common/success");
 					mv.addObject("successMsg", "创建菜单成功");
@@ -729,7 +737,8 @@ public class WxApiCtrl {
 	public String deletePublicMenu(HttpServletRequest request) {
 		String code = "";
 		JSONObject rstObj = null;
-		MpAccount mpAccount = WxMemoryCacheClient.getSingleMpAccount();//获取缓存中的唯一账号
+		//获取缓存中的唯一账号
+		MpAccount mpAccount = WxMemoryCacheClient.getSingleMpAccount();
 		if(mpAccount != null){
 			rstObj = myService.deleteMenu(mpAccount);
 			if(rstObj != null && rstObj.getInt("errcode") == 0){

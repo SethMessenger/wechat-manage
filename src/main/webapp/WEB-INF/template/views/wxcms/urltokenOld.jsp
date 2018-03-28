@@ -71,7 +71,7 @@
             
         
             <div class="utInfo">
-              <form class="fm-form" action="<%=path%>/wxcms/getUrl" method="post" onsubmit="return dosubmit();">
+              <form class="fm-form" action="<%=path%>/wxcms/getUrlOld" method="post" onsubmit="return dosubmit();">
 				<input type="hidden" name="id" value="${account.id}"/>
             	<ul>
                 	<li class="gzhID"><span>公众号ID</span><input id="id_account" name="account" type="text" value="${account.account}">

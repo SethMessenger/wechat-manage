@@ -6,6 +6,8 @@ import com.wxmp.backstage.img.domain.ImgResource;
 import com.wxmp.backstage.img.service.ImgResourceService;
 import com.wxmp.backstage.sys.domain.SysUser;
 import com.wxmp.backstage.sys.service.ISysUserService;
+import com.wxmp.core.domain.ajax.BaseAjaxResult;
+import com.wxmp.core.domain.ajax.CmsAjaxResult;
 import com.wxmp.core.page.Pagination;
 import com.wxmp.core.spring.SpringFreemarkerContextPathUtil;
 import com.wxmp.core.util.PropertiesConfigUtil;
@@ -30,10 +32,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -47,16 +46,15 @@ import java.util.*;
 /**
  * 
  */
-
 @Controller
 @RequestMapping("/wxcms")
 public class WxCmsCtrl {
 
 	@Autowired
-	AccountDao accountDao;
-	
+	private AccountDao accountDao;
+
 	@Autowired
-	MsgNewsDao msgNewsDao;
+	private MsgNewsDao msgNewsDao;
 	
 	@Autowired
 	private ISysUserService sysUserService;
@@ -66,6 +64,8 @@ public class WxCmsCtrl {
 	
 	@Autowired
 	private MsgNewsService msgNewsService;
+
+	private String TOKEN_URL_FORMAT = "%s://%s%s/wxapi/%s/message.html";
 
 	/**
 	 * 用户引导页
@@ -140,35 +140,19 @@ public class WxCmsCtrl {
 		}else{
 			mv.addObject("account",new Account());
 		}
-		List<String> msgCountList = new ArrayList<String>();
-		for(int i=1;i<8;i++){
-			msgCountList.add(String.valueOf(i));
-		}
-		mv.addObject("cur_nav", "urltoken");
-		if(save != null){
-			mv.addObject("successflag",true);
-		}else{
-			mv.addObject("successflag",false);
-		}
-		mv.addObject("msgCountList", msgCountList);
-		
 		SysUser sysUser =  SessionUtilsWeb.getUser(request);
 		session.setAttribute("sysUser", sysUser);
 		return mv;
 	}
 
-	/**
-	 * 生成
-	 * @param request
-	 * @param account
-	 * @return
-	 */
-	@RequestMapping(value = "/getUrl")
-	public ModelAndView getUrl(HttpServletRequest request ,@ModelAttribute Account account){
+	//TODO 待删除 更新tokenurl信息
+	@RequestMapping(value = "/getUrlOld")
+	public ModelAndView getUrlOld(HttpServletRequest request ,@ModelAttribute Account account){
 		String path = SpringFreemarkerContextPathUtil.getBasePath(request);
 		String url = request.getScheme() + "://" + request.getServerName() + path + "/wxapi/" + account.getAccount()+"/message.html";
-		
-		if(account.getId() == null){//新增
+
+		if(account.getId() == null){
+			//新增
 			account.setUrl(url);
 			account.setToken(UUID.randomUUID().toString().replace("-", ""));
 			account.setCreatetime(new Date());
@@ -184,6 +168,46 @@ public class WxCmsCtrl {
 		}
 		WxMemoryCacheClient.addMpAccount(account);
 		return new ModelAndView("redirect:/wxcms/urltoken?save=true");
+	}
+
+	/**
+	 * 生成在微信填写的服务器地址， 然后刷新当前的urltoken页面
+	 * @param request
+	 * @param account
+	 * @return
+	 */
+	@RequestMapping(value = "/getUrl", method = RequestMethod.POST)
+	@ResponseBody
+	public BaseAjaxResult getUrl(HttpServletRequest request , @ModelAttribute Account account){
+		BaseAjaxResult result = null;
+		try {
+			SysUser user = SessionUtilsWeb.getUser(request);
+			String path = SpringFreemarkerContextPathUtil.getBasePath(request);
+			String url = String.format(TOKEN_URL_FORMAT, request.getScheme(), request.getServerName(), path, account.getAccount());
+			if(account.getId() == null){
+				//新增
+				account.setUrl(url);
+				account.setToken(UUID.randomUUID().toString().replace("-", ""));
+				account.setCreatetime(new Date());
+				result = new CmsAjaxResult(user, 0, "add success");
+				accountDao.add(account);
+			}else{
+				//更新
+				Account tmpAccount = accountDao.getById(account.getId().toString());
+				tmpAccount.setUrl(url);
+				tmpAccount.setAccount(account.getAccount());
+				tmpAccount.setAppid(account.getAppid());
+				tmpAccount.setAppsecret(account.getAppsecret());
+				tmpAccount.setMsgcount(account.getMsgcount());
+				accountDao.update(tmpAccount);
+				result = new CmsAjaxResult(user, 0, "update success");
+			}
+			WxMemoryCacheClient.addMpAccount(account);
+		} catch (Exception e){
+			e.printStackTrace();
+			result = new CmsAjaxResult(null, -1, "exception occured !");
+		}
+		return result;
 	}
 	
 	@RequestMapping(value = "/ckeditorImage")

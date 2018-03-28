@@ -104,38 +104,43 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form method="get" class="form-horizontal">
+                    <form method="get" class="form-horizontal" action="/wxcms/getUrl" id="tokenurl_form">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">公众号ID</label>
                             <div class="col-sm-6">
-                                <input type="text" placeholder="公众号ID简介" class="form-control">
+                                <input type="hidden" name="id" value="${(account.id)!''}"/>
+                                <input type="text" placeholder="公众号ID简介" class="form-control" id="account_id" name="account" value="${(account.account)!''}">
                             </div>
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-primary">自动生成</button>
+                                <#if (account.id)??> //判断对象中的id不为空
+                                    <button disabled="disabled" id="createBtn" type="button" class="btn btn-primary">自动生成</button>
+                                <#else >
+                                    <button id="createBtn" type="button" class="btn btn-primary">自动生成</button>
+                                </#if>
                             </span>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">URL</label>
                             <div class="col-sm-6">
-                                <input type="text" placeholder="URL简介" class="form-control">
+                                <input type="text" placeholder="URL简介" class="form-control" id="url_id" name="url" value="${(account.url)!''}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">TOKEN</label>
                             <div class="col-sm-6">
-                                <input type="text" placeholder="TOKEN简介" class="form-control">
+                                <input type="text" placeholder="TOKEN简介" class="form-control" id="token_id" name="token" value="${(account.token)!''}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">APPID</label>
                             <div class="col-sm-6">
-                                <input type="text" placeholder="APPID简介" class="form-control">
+                                <input type="text" placeholder="APPID简介" class="form-control" id="appid_id" name="appid" value="${(account.appid)!''}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">APPSecret</label>
                             <div class="col-sm-6">
-                                <input type="text" placeholder="APPSecret简介" class="form-control">
+                                <input type="text" placeholder="APPSecret简介" class="form-control" id="appsecret_id" name="appsecret" ${(account.appsecret)!''}>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -143,19 +148,43 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">回复图文消息条数</label>
                             <div class="col-sm-6">
-                                <select class="form-control m-b" name="account">
-                                    <option>选项 1</option>
-                                    <option>选项 2</option>
-                                    <option>选项 3</option>
-                                    <option>选项 4</option>
+                                <select class="form-control m-b" name="msgcount" id="msgcount_id" value="${(account.msgcount)!''}">
+                                    <#if (account.msgcount)??>
+                                        <#if (account.msgcount) == 1>
+                                            <option value="1" selected >1</option>
+                                        <#else >
+                                            <option value="1">1</option>
+                                        </#if>
+                                        <#if (account.msgcount) == 2>
+                                            <option value="2" selected >2</option>
+                                        <#else >
+                                            <option value="2">2</option>
+                                        </#if>
+                                        <#if (account.msgcount) == 3>
+                                            <option value="3" selected >3</option>
+                                        <#else >
+                                            <option value="3">3</option>
+                                        </#if>
+                                        <#if (account.msgcount) == 4>
+                                            <option value="4" selected >4</option>
+                                        <#else >
+                                            <option value="4">4</option>
+                                        </#if>
+                                        <#if (account.msgcount) == 5>
+                                            <option value="5" selected >5</option>
+                                        <#else >
+                                            <option value="5">5</option>
+                                        </#if>
+                                    <#else >
+                                        <option value="1" selected >1</option>
+                                    </#if>
                                 </select>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
-                                <button class="btn btn-primary" type="submit">保存内容</button>
-                                <button class="btn btn-white" type="submit">取消</button>
+                                <button class="btn btn-primary" type="button" id="tokenurl_form_sub">保存</button>
                             </div>
                         </div>
                     </form>
@@ -166,5 +195,60 @@
     </div>
 </div>
 </body>
+
+<script type="text/javascript">
+    $("#createBtn").click(function () {
+        //提交当前的表单中的信息至/wxcms/getUrl/中去，跳转刷新本页面
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",
+            //预期服务器返回的数据类型
+            dataType: "json",
+            url: "/wxcms/getUrl" ,
+            data: $('#tokenurl_form').serialize(),
+            success: function (result) {
+                //打印服务端返回的数据(调试用)
+                console.log(result);
+                if (result.code == 0) {
+                    if(result.msg == 'add success'){
+                        alert("微信所需链接生成完毕");
+                    }else {
+                        alert("资料已更新");
+                    }
+                };
+            },
+            error : function() {
+                alert("ajax异常，请联系网络管理员!！");
+            }
+        });
+        this.iframe.refresh();
+    });
+    $("#tokenurl_form_sub").click(function () {
+        //提交当前的表单中的信息至/wxcms/getUrl/中去，跳转刷新本页面
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",
+            //预期服务器返回的数据类型
+            dataType: "json",
+            url: "/wxcms/getUrl" ,
+            data: $('#tokenurl_form').serialize(),
+            success: function (result) {
+                //打印服务端返回的数据(调试用)
+                console.log(result);
+                if (result.code == 0) {
+                    if(result.msg == 'add success'){
+                        alert("微信所需链接生成完毕");
+                    }else {
+                        alert("资料已更新");
+                    }
+                };
+            },
+            error : function() {
+                alert("ajax异常，请联系网络管理员!！");
+            }
+        });
+        this.iframe.refresh();
+    });
+</script>
 
 </html>

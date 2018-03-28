@@ -9,11 +9,14 @@ import com.wxmp.wxapi.process.MpAccount;
  */
 public class Account extends MpAccount{
 
-	private String name;//名称
+	/** 名称 */
+	private String name;
+	/** id */
 	private Long id;
-	private Date createtime = new Date();//创建时间
+	/** 创建时间 */
+	private Date createtime = new Date();
 	
-	
+
 	
 	public String getName() {
 		return name;

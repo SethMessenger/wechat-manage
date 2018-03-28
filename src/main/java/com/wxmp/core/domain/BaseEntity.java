@@ -4,8 +4,10 @@ import java.util.Date;
 
 public class BaseEntity {
 
+	/** id */
 	private Long id;
-	private Date createtime = new Date();//创建时间
+	/** 创建时间 */
+	private Date createtime = new Date();
 	
 	
 	public Long getId() {

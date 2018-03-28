@@ -185,13 +185,15 @@ public class MyServiceImpl implements MyService{
 		Matchrule matchrule = new Matchrule();
 		String menuJson = prepareMenus(menus,matchrule);
 		logger.info("创建菜单传参如下:"+menuJson);
-		JSONObject rstObj = WxApiClient.publishMenus(menuJson,mpAccount);//创建普通菜单
+		//创建普通菜单
+		JSONObject rstObj = WxApiClient.publishMenus(menuJson,mpAccount);
 		logger.info("创建菜单返回消息如下:"+rstObj.toString());
 		//以下为创建个性化菜单demo，只为男创建菜单；其他个性化需求 设置 Matchrule 属性即可
 //		matchrule.setSex("1");//1-男 ；2-女
 //		JSONObject rstObj = WxApiClient.publishAddconditionalMenus(menuJson,mpAccount);//创建个性化菜单
 		
-		if(rstObj != null){//成功，更新菜单组
+		if(rstObj != null){
+			//成功，更新菜单组
 			if(rstObj.containsKey("menu_id")){
 				menuGroupDao.updateMenuGroupDisable();
 				menuGroupDao.updateMenuGroupEnable(gid);
@@ -206,7 +208,8 @@ public class MyServiceImpl implements MyService{
 	//删除菜单
 	public JSONObject deleteMenu(MpAccount mpAccount){
 		JSONObject rstObj = WxApiClient.deleteMenu(mpAccount);
-		if(rstObj != null && rstObj.getInt("errcode") == 0){//成功，更新菜单组
+		if(rstObj != null && rstObj.getInt("errcode") == 0){
+			//成功，更新菜单组
 			menuGroupDao.updateMenuGroupDisable();
 		}
 		return rstObj;

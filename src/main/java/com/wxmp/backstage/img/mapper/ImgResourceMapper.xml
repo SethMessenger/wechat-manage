@@ -5,11 +5,11 @@
     
 	<select id="getImgById" parameterType="java.lang.String" 
 	resultType="com.wxmp.backstage.img.domain.ImgResource">
-		SELECT * FROM t_wxcms_img_resource WHERE ID = #{id}
+		SELECT * FROM s_img_resource WHERE ID = #{id}
 	</select>
     
 	<insert id="add" parameterType="com.wxmp.backstage.img.domain.ImgResource">
-		INSERT INTO t_wxcms_img_resource 
+		INSERT INTO s_img_resource
 		 (id,
 		  mediaId,
 		  trueName,
@@ -36,7 +36,7 @@
 
     <!-- 根据媒体资源 -->
 	<delete id="deleteByMediaId" parameterType="java.lang.String" >
-		DELETE FROM t_wxcms_img_resource t WHERE t.mediaId = #{mediaId}
+		DELETE FROM s_img_resource t WHERE t.mediaId = #{mediaId}
 	</delete>
 
 </mapper>

@@ -260,3 +260,60 @@ insert  into `t_wxcms_sys_user`(`id`,`account`,`pwd`,`trueName`,`sex`,`phone`,`c
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+
+-- 业务：修改表名为自身定义
+-- 作者：SethMessenger
+-- 日期: 2018-03-30
+-- 执行状态： 未执行
+
+-- 修改表名,起始字符修改为"s_"，
+-- 微信账户表
+ALTER  TABLE `t_wxcms_account` RENAME TO `s_account`;
+-- 微信关注用户表（也可以理解为用户表）
+ALTER  TABLE `t_wxcms_account_fans` RENAME TO `s_account_fans`;
+-- 微信账户菜单
+ALTER  TABLE `t_wxcms_account_menu` RENAME TO `s_account_menu`;
+-- 微信账户菜单组
+ALTER  TABLE `t_wxcms_account_menu_group` RENAME TO `s_account_menu_group`;
+-- 微信图文消息表
+ALTER  TABLE `t_wxcms_article` RENAME TO `s_article`;
+-- 微信图片资料信息
+ALTER  TABLE `t_wxcms_img_resource` RENAME TO `s_img_resource`;
+-- 微信媒体信息？？？
+ALTER  TABLE `t_wxcms_media_files` RENAME TO `s_media_files`;
+-- 消息
+ALTER  TABLE `t_wxcms_msg_base` RENAME TO `s_msg_base`;
+-- 消息
+ALTER  TABLE `t_wxcms_msg_news` RENAME TO `s_msg_news`;
+-- 消息
+ALTER  TABLE `t_wxcms_msg_news_combin` RENAME TO `s_msg_news_combin`;
+-- 消息
+ALTER  TABLE `t_wxcms_msg_text` RENAME TO `s_msg_text`;
+-- 系统用户表（待拆分，根据业务单位公司进行人员权限划分）
+ALTER  TABLE `t_wxcms_sys_user` RENAME TO `s_sys_user`;
+
+
+-- 业务：新增冗余表s_company，以便于根据公司维度进行微信业务的区分，并且将微信账户和公司账户进行关联
+-- 作者：SethMessenger
+-- 日期: 2018-03-30
+-- 执行状态： 未执行
+
+CREATE TABLE `s_company` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '公司名称（以微信业务划分）',
+  `legalPerson` varchar(32) NOT NULL DEFAULT '' COMMENT '法人姓名',
+  `legalPhone` varchar(32) NOT NULL DEFAULT '' COMMENT '法人联系电话',
+  `legalCompanyName` varchar(64) NOT NULL COMMENT '公司法定名称（以营业执照为准）',
+  `legalLicense` varchar(64) NOT NULL DEFAULT '' COMMENT '公司法定营业号',
+  `legalLicenseImage` int(64) NOT NULL COMMENT '营业执照图片',
+  `logo` varchar(64) DEFAULT NULL COMMENT '公司logo缩略图',
+  `createTime` date NOT NULL COMMENT '记录创建时间',
+  `updateTime` date NOT NULL COMMENT '最新更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+alter table s_sys_user add companyId varchar(11) not null default '';
+
+alter table `s_account` add companyId varchar(11) not null default '';
+

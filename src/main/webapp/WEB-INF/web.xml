@@ -15,11 +15,11 @@
         <param-name>log4jRefreshInterval</param-name>
         <param-value>60000</param-value>
     </context-param>
-	<!--监听器-->
+	<!--spring加载的监听器-->
     <listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	<!--前端控制器拦截所有的请求-->
+	<!--springmvc前端控制器拦截所有的请求-->
     <servlet>
 		<servlet-name>spring-mvc</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -33,6 +33,23 @@
 		<servlet-name>spring-mvc</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+
+	<!-- shiro过滤器定义 -->
+	<filter>
+		<filter-name>shiroFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<!-- 该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由ServletContainer管理 -->
+			<param-name>targetFilterLifecycle</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>shiroFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 编码过滤器 -->
 	<filter>
 		<filter-name>encoding</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -51,51 +68,8 @@
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 	</filter-mapping>
-	<!--获取httprequest -->
 
-	<!-- <filter> <filter-name>security</filter-name> <filter-class>com.siwo.backstage.core.web.filter.SecurityFilter</filter-class> 
-		</filter> <filter-mapping> <filter-name>security</filter-name> <url-pattern>/*</url-pattern> 
-		<dispatcher>REQUEST</dispatcher> <dispatcher>FORWARD</dispatcher> </filter-mapping>
-		
-	<filter>
-		<filter-name>UrlRewriteFilter</filter-name>
-		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>UrlRewriteFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-		<dispatcher>FORWARD</dispatcher>
-	</filter-mapping>
-
-	<filter>
-		<filter-name>HiddenHttpMethodFilter</filter-name>
-		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>HiddenHttpMethodFilter</filter-name>
-		<servlet-name>spring-mvc</servlet-name>
-	</filter-mapping>
-		
-		 -->
-
-
-    <!-- 本项目采用apache log4j 非logback方式-->
-	<!-- sping集成logback -->
-    <!-- sping4 则不用配置以下 -->
-<!-- 	<listener>    
-	    <listener-class>com.wxmp.backstage.common.LogbackConfigListener</listener-class>    
-	</listener>    
-	<context-param>    
-	    <param-name>logbackConfigLocation</param-name>    
-	    <param-value>WEB-INF/classes/logback.xml</param-value>    
-	</context-param> -->
-
-
-	
-	<!-- <security-constraint> <web-resource-collection> <web-resource-name>JSP</web-resource-name> 
-		<url-pattern>*.jsp</url-pattern> </web-resource-collection> <auth-constraint> 
-		<description>Can't access JSP</description> </auth-constraint> </security-constraint> -->
+	<!-- 错误页面的配置 -->
 	<error-page>
 		<error-code>406</error-code>
 		<location>/WEB-INF/template/views/406.jsp</location>

@@ -19,6 +19,8 @@ public class MpAccount implements Serializable{
 	private String token;
 	/** appid */
 	private String appid;
+	/** 关联的公司id */
+	private String companyId;
 
 	/** 自动回复消息条数;默认是5条 */
 	private Integer msgcount;
@@ -54,6 +56,8 @@ public class MpAccount implements Serializable{
 	public void setToken(String token) {
 		this.token = token;
 	}
+	public String getCompanyId() { return companyId; }
+	public void setCompanyId(String companyId) { this.companyId = companyId; }
 	public Integer getMsgcount() {
 		if(msgcount == null){
 			//默认5条
@@ -61,8 +65,8 @@ public class MpAccount implements Serializable{
 		}
 		return msgcount;
 	}
+
 	public void setMsgcount(Integer msgcount) {
 		this.msgcount = msgcount;
 	}
-	
 }
